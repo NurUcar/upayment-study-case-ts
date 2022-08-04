@@ -19,7 +19,7 @@ const Products: FC = () => {
     const dispatch = useDispatch();
 
     const {categories, categoriesErrorMessage} = useSelector((state: RootState) => state.categories);
-    const {products, productErrorMessage, productInfoMessage, productIsLoading} = useSelector((state: RootState) => state.products);
+    const {products, productErrorMessage, productIsLoading} = useSelector((state: RootState) => state.products);
     
     const [categoryList, setCategoryList] = useState<CategoriesInterface>();    
     const [productList, setProductList] = useState<ProductsInterface>();  
@@ -46,7 +46,7 @@ const Products: FC = () => {
     },[categories]);
 
     useEffect(() => {
-        if(!productList  && products){
+        if(products){
             setProductList(products);
             setTempProductList(products);
         }
@@ -54,15 +54,6 @@ const Products: FC = () => {
     });
     
     useEffect(() => {
-        
-        if(productInfoMessage){
-            dispatch(ProductActions.getProducts());
-            if(products){
-                setProductList(products);
-                setTempProductList(products);
-            }
-        }
-
         if (productErrorMessage) {
             notify.error(productErrorMessage);
             dispatch(ProductActions.setProductErrorMessage(""));
@@ -70,7 +61,7 @@ const Products: FC = () => {
             if(products)
                 setProductList(products);
         }
-    }, [ productErrorMessage, productInfoMessage]);
+    }, [productErrorMessage]);
 
     useEffect(() => {
         if (categoriesErrorMessage) {

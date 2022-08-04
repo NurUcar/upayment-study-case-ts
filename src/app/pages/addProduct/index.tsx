@@ -56,6 +56,7 @@ const AddProduct: FC = () => {
     useEffect(() => {
         if (productInfoMessage) {
             notify.info(productInfoMessage);
+            dispatch(ProductActions.getProducts()); 
             dispatch(ProductActions.setProductInfoMessage(""));
             navigate(`/`);  
         }
