@@ -27,6 +27,7 @@ const Products: FC = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchValue, setSearchValue] = useState('');
 
+    
     useEffect(() =>{
         if(products === null)
             dispatch(ProductActions.getProducts());
@@ -45,9 +46,21 @@ const Products: FC = () => {
     },[categories]);
 
     useEffect(() => {
-        if(productInfoMessage && products){
+        if(!productList  && products){
             setProductList(products);
             setTempProductList(products);
+        }
+    
+    });
+    
+    useEffect(() => {
+        
+        if(productInfoMessage){
+            dispatch(ProductActions.getProducts());
+            if(products){
+                setProductList(products);
+                setTempProductList(products);
+            }
         }
 
         if (productErrorMessage) {
@@ -72,9 +85,20 @@ const Products: FC = () => {
             setProductList( {
                 message:'', 
                 products: tempProductList?.products.filter((p) => p.category === selectedCategory)
-            })
+            });
         }
     },[selectedCategory]); 
+
+    useEffect(() =>{
+        if(tempProductList && searchValue)
+            setProductList({
+                message:'', 
+                products: tempProductList?.products.filter((p) => p.name.toLowerCase().includes(searchValue.toLowerCase()))
+            });
+        else
+            setProductList(tempProductList);
+
+    }, [searchValue]);
 
     const onDetailClicked = (id:any) => {   
        navigate(`product-detail/${id}`);  
@@ -82,7 +106,8 @@ const Products: FC = () => {
 
     const onAddProductClicked = () => {   
         navigate(`add-new-product`);  
-     };
+    };
+
     return(
         <div>
             <TopBar/>

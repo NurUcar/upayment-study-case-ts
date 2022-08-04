@@ -24,6 +24,9 @@ const constraints = {
     price:{
         presence: {
             message: 'Price can not be empty.'
+        },
+        numericality: {
+            greaterThan: 0
         }
     },
 

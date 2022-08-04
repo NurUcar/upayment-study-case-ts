@@ -83,6 +83,10 @@ const AddProduct: FC = () => {
         if (errors.length === 0)
             dispatch(ProductActions.createProduct(avatar, category, description, "nur0ucar@gmail.com", name, Number(price)));        
     };
+    const onBackClick = () => {
+        
+        navigate(`/`);  
+    }
 
     return(
         <div >
@@ -126,6 +130,7 @@ const AddProduct: FC = () => {
                         <small id="name-help" className="p-error p-d-block">{avatarError}</small>
                     </div>
                     }
+
                     <Dropdown
                         value = {category} 
                         options={categoryList ? categoryList.categories.map((item) => {
@@ -135,27 +140,28 @@ const AddProduct: FC = () => {
                         placeholder='Choose Product Category'
                         className="mt-3"
                     /> 
-                    
-                        
-                        {categoryError && (
-                            <div className="flex justify-content-end">
-                                <small id="name-help" className="p-error p-d-block"> {categoryError}</small>
-                            </div>
-                        )}
-
-                        <InputText 
-                            value = {price} 
-                            placeholder="Price"
-                            onChange={(e) => {setPrice(e.target.value); setPriceError('')}} 
-                            className="mt-3"
-                        />
-                        {priceError &&
+                    {categoryError && (
                         <div className="flex justify-content-end">
-                            <small id="name-help" className="p-error p-d-block">{priceError}</small>
+                             <small id="name-help" className="p-error p-d-block"> {categoryError}</small>
                         </div>
-                        }
-                        
-                    <Button  label="Submit" onClick={onSaveClick} className="p-button-outlined p-button-success mt-3" />
+                     )}
+
+                    <InputText 
+                         value = {price} 
+                        placeholder="Price"
+                         onChange={(e) => {setPrice(e.target.value); setPriceError('')}} 
+                         className="mt-3"
+                    />
+                    {priceError &&
+                    <div className="flex justify-content-end">
+                        <small id="name-help" className="p-error p-d-block">{priceError}</small>
+                    </div>
+                    }
+
+                    <div className="flex flex-row mt-3 justify-content-between">
+                        <Button  label="Back" onClick={onBackClick} className="p-button-outlined p-button-danger w-5" />
+                        <Button  label="Submit" onClick={onSaveClick} className="p-button-outlined p-button-success w-5" />
+                    </div>
                 </div>
             </div>  
             
